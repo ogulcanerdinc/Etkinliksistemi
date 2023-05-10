@@ -1,0 +1,198 @@
+﻿@using Eys.Infra.CrossCutting.AppUserIdentity.Model
+
+@inject Microsoft.Extensions.Configuration.IConfiguration config
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var user = (UserViewModel)ViewBag.User;
+    var api = config["ImageServerUrl"];
+}
+<style>
+    .left-menu-nav-item
+    {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        width: 100%;
+        height: 40px;
+    }
+
+    .left-menu-nav-item-text {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+        color:black !important
+    }
+</style>
+<section class="ftco-section contact-section">
+    <input id="Id" type="hidden" value="@user.Id" />
+    <input id="EventStartDateFilter" type="hidden" value="@DateTime.Now" />
+    <input id="EventEndDateFilter" type="hidden" value="@DateTime.Now" />
+    <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+            <div class="col-md-4">
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <div class="border w-100 p-4 rounded mb-2 d-flex" style="border-radius:20px !important;justify-content:center;">
+                            <p>
+                                @user.Name @user.SurName
+                                <br />
+                                <a onclick="clickNavbarItem('ticketsArea')"><i class="bx bxs-coupon" style="width: 1.75rem;font-size: 1.5rem;text-align: center;margin-right: 1.125rem;color: #262626;"></i> Etkinliklerim</a>
+                                <br /> 
+                                <a onclick="clickNavbarItem('ProfileArea')"><i class="bx bxs-cog" style="width: 1.75rem;font-size: 1.5rem;text-align: center;margin-right: 1.125rem;color: #262626;"></i> Hesap Ayarları</a>
+                                <br />
+                                <a href="/User/SignOut" style="color:red"><i class="bx bxs-exit" style="width: 1.75rem;font-size: 1.5rem;text-align: center;margin-right: 1.125rem;color: red;"></i> Çıkış</a>
+
+
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-8 block-9 mb-md-5">
+
+                <div class="row">
+                    <div id="ticketsArea" class="col-md-12 pills" style="margin-top:0px !important;display:none">
+                        <div class="bd-example bd-example-tabs">
+                            <div class="d-flex justify-content-center">
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-myevents-tab" data-toggle="pill" href="#pills-myevents" role="tab" aria-controls="pills-myevents" aria-expanded="true">Oluşturduğum Etkinlikler</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-allevents-tab" data-toggle="pill" href="#pills-allevents" role="tab" aria-controls="pills-allevents" aria-expanded="true">Tüm Etkinlikler</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane" id="pills-myevents" role="tabpanel" aria-labelledby="pills-myevents-tab">
+                                    <a class="btn btn-success btn-label" href="/Events/EventsEdit?Id=@Guid.Empty" style="float:right;margin-bottom:15px"><i class="bx bx-plus" style="color:white !important"></i>Etkinlik Oluştur</a>
+                                    <table id="EventsTable" class="table">
+                                        <thead class="thead-primary">
+                                            <tr class="text-center">
+                                                <th style="color:black !important">Resim</th>
+                                                <th style="color:black !important">Etkinlik</th>
+                                                <th style="color:black !important">Adress</th>
+                                                <th style="color:black !important">Tarih</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="pills-allevents" role="tabpanel" aria-labelledby="pills-allevents-tab">
+                                    <table id="EventsUserTable" class="table">
+                                        <thead class="thead-primary">
+                                            <tr class="text-center">
+                                                <th style="color:black !important">Resim</th>
+                                                <th style="color:black !important">Etkinlik</th>
+                                                <th style="color:black !important">Adress</th>
+                                                <th style="color:black !important">Tarih</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="ProfileArea" class="col-md-12 pills" style="margin-top:0px !important">
+                        <div class="bd-example bd-example-tabs">
+                            <div class="d-flex justify-content-center">
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-expanded="true">
+                                            Kişisel Bilgilerim
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-password-tab" data-toggle="pill" href="#pills-password" role="tab" aria-controls="pills-password" aria-expanded="true">
+                                            Şifre Değişikliği
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane  fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Ad</label>
+                                            <input type="text" id="Name" name="Name" class="form-control" placeholder="Ad" value="@user.Name">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Soyad</label>
+                                            <input type="text" id="Surname" name="Surname" class="form-control" placeholder="Soyad" value="@user.SurName">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>Email</label>
+                                            <input type="text" id="Email" name="Email" class="form-control" placeholder="Email" value="@user.Email">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group" style="margin-top:10px">
+                                        <a class="btn btn-primary py-3 px-5" onclick="User.ProfileUpdate()" style="color:white"> Değişiklikleri Kaydet </a>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-password" role="tabpanel" aria-labelledby="pills-password-tab">
+                                    <div class="col-md-4" style=" padding-left: 0px !important; ">
+                                        <label>Mevcut İifre</label>
+                                        <input type="password" id="Password" name="Password" class="form-control" placeholder="Mevcut Şifre">
+                                    </div>
+                                    <div class="row">
+                                        <br />
+                                        <div class="col-md-4">
+                                            <label>Yeni Şifre</label>
+                                            <input type="password" id="NewPassword" name="NewPassword" class="form-control" placeholder="Yeni Şifre">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group" style="margin-top:10px">
+                                        <a class="btn btn-primary py-3 px-5" onclick="User.PasswordUpdate()" style="color:white">Güncelle </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/js/pages/user.js"></script>
+<script src="~/js/pages/event.js"></script>
+@section Scripts{
+    <script>
+        function clickNavbarItem(area) {
+            if (area == "ProfileArea") {
+                $('#ticketsArea').attr("style", "margin-top:0px !important;display:none")
+                $('#' + area).attr("style", "margin-top:0px !important;display:block")
+            }
+            else {
+                $('#ProfileArea').attr("style", "margin-top:0px !important;display:none")
+                $('#' + area).attr("style", "margin-top:0px !important;display:block")
+
+            }
+        }
+        var apis = '@api';
+        User.GetEventsList();
+        Events.GetEventsList();
+    </script>
+
+}

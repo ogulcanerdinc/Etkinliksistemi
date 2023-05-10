@@ -1,0 +1,43 @@
+﻿@using Eys.Domain.Services.Impl.Helper
+@inject ImageHelper imageHelper
+@using Eys.Domain.Models
+@model List<EventsViewModel>
+@inject Microsoft.Extensions.Configuration.IConfiguration config
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var api = config["ImageServerUrl"];
+    //var CategoryId = (Guid)ViewBag.CategoryId;
+}
+<section class="ftco-section ftco-cart">
+    @*<input type="hidden" Id="CategoryId" value="@CategoryId" />*@
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ftco-animate fadeInUp ftco-animated">
+                <div class="event-list">
+                    <table id="EventsTable" class="table">
+                        <thead class="thead-primary">
+                            <tr class="text-center">
+                                <th style="color:black !important">Resim</th>
+                                <th style="color:black !important">Etkinlik</th>
+                                <th style="color:black !important">Adress</th>
+                                <th style="color:black !important">Tarih</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="/js/pages/event.js"></script>
+@section Scripts{
+    <script>
+        var apis = '@api';
+        Events.GetEventsList();
+    </script>
+
+}

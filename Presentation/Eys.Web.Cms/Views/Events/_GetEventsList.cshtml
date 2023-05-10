@@ -1,0 +1,54 @@
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration config
+@{
+    ViewData["Title"] = "Etkinlik Listesi";
+    var jsVersion = config["AppConfig:JsCacheVersion"];
+}
+<div class="row g-3 mb-3">
+    <div class="col-sm-7">
+        <label for="exampleInputEmail1" class="form-label">Etkinlik Adı</label>
+        <input type="text" class="form-control searchInput" id="EventsNameSearch" aria-describedby="emailHelp">
+    </div>
+    <div class="col-sm">
+        <label for="exampleInputEmail1" class="form-label">Filtre</label>
+        <br>
+        <a onclick="Events.EventsFilter()" class="btn btn-primary btn-label searchButton" style="color:white"><i class="bx bx-search-alt label-icon align-middle fs-16 me-2"></i>Ara</a>
+    </div>
+</div>
+<div class="col-md-12">
+
+
+    <div class="button-wrapper">
+        <a class="btn btn-success btn-label" href="/Events/EventsEdit?Id=@Guid.Empty" style="float:right;margin-bottom:15px"><i class="bx bx-plus label-icon align-middle fs-16 me-2"></i>Etkinlik Oluştur</a>
+
+    </div>
+
+
+</div>
+
+
+
+<table id="EventsTable" class="table nowrap align-middle dataTable no-footer" style="width:100%">
+    <thead>
+        <tr>
+            <th>Etkinlik Adı</th>
+            <th>Etkinlik Kategorisi</th>
+            <th>Etkinlik Kısa Açıklaması</th>
+            <th>Etkinlik Başlangıç Tarihi</th>
+            <th>Etkinlik Bitiş Tarihi</th>
+            <th>Etkinlik Şehri</th>
+            <th>Etkinlik Adresi</th>
+            <th>İşlemler</th>
+
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script src="/js/pages/events.js?v=@jsVersion"></script>
+@section Scripts{
+    <script>
+        Events.GetEventsList();
+    </script>
+
+}

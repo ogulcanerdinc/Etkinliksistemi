@@ -1,0 +1,17 @@
+﻿@using Eys.Domain.Models
+@model CategoryViewModel
+@{
+    ViewData["Title"] = "_GetCategory";
+    Layout = null;
+}
+<div class="col-md-12">
+    <form id="frmCategory">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" id="Id" />
+        <div class="col-md-12 form-group mb-3">
+            <label for="exampleInputEmail1" class="form-label">Kategori Adı</label>
+            <input type="text" class="form-control" id="CategoryName" asp-for="CategoryName" required>
+        </div>
+    </form>
+</div>
+

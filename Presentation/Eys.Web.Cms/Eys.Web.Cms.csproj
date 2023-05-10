@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\Eys.Domain.Services\Eys.Domain.Services.csproj" />
+    <ProjectReference Include="..\..\Domain\Eys.Domain\Eys.Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Eys.Infra.CrossCutting.AppUser\Eys.Infra.CrossCutting.AppUserIdentity.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Eys.Infra.CrossCutting.IoC\Eys.Infra.CrossCutting.IoC.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Eys.Infra.Data\Eys.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>

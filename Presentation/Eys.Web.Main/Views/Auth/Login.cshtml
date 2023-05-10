@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<section class="ftco-section contact-section">
+    <div class="container">
+        <div class="row d-flex mb-5 contact-info" style="justify-content: center;">
+            <div class="col-md-6 block-9 mb-md-5" style="text-align:center;">
+                <form class="bg-light p-5 contact-form">
+                    @Html.AntiForgeryToken()
+                    <div style="text-align:center">
+                        <h4>Giriş Yap</h4>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="Email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="Password" class="form-control" placeholder="Şifre">
+                    </div>
+                    <div class="form-group">
+                        <a class="btn btn-info py-3 px-5" href="/Auth/SignUp" style="color:white">Hesap Oluştur</a>
+                        <a class="btn btn-primary py-3 px-5" onclick="Auth.Login()">Giriş Yap</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/js/pages/auth.js"></script>

@@ -1,0 +1,32 @@
+﻿@using Eys.Domain.Models
+@{
+    var categoryList = (List<CategoryViewModel>)ViewBag.Categories;
+    var checkLogin = (string)ViewBag.UserId;
+}
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">Etkinlik<span>Burada</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/" class="nav-link">Anasayfa</a></li>
+                @foreach (var item in categoryList)
+                {
+                    <li class="nav-item"><a href="/kategori?slug=@item.CategoryName" class="nav-link">@item.CategoryName</a></li>
+                }
+                @if(checkLogin==null)
+                {
+                    <li class="nav-item"><a href="/Auth/Login" class="nav-link">Giriş Yap</a></li>
+                }
+                else
+                {
+                    <li class="nav-item"><a href="/User/index" class="nav-link">Hesabım</a></li>
+                    
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

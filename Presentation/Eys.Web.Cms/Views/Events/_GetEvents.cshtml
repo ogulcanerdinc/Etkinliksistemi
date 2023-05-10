@@ -1,0 +1,149 @@
+﻿@using Eys.Domain.Models
+@inject Microsoft.Extensions.Configuration.IConfiguration config
+@using Eys.Domain.Services.Impl.Helper
+@inject ImageHelper imageHelper
+@model EventsViewModel
+@{
+    ViewData["Title"] = "Etkinlik";
+
+}
+<style>
+    .news_img {
+        margin: 0 20 0 20;
+    }
+
+    .trailer_button {
+        z-index: 999;
+        margin: 1 20 -20 20;
+        width: 181px;
+        border-radius: 10px;
+    }
+
+    .buttonimg {
+        width: auto;
+        height: auto;
+    }
+</style>
+<link href="~/plugins/summernote/summernote-lite.min.css" rel="stylesheet" />
+<div class="col-md-12">
+    <form id="frmEvent">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" id="Id" />
+        <div class="row">
+            <div class="col-md-12 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Etkinlik Kategorisi</label>
+                <select class="js-states form-control" tabindex="-1" id="CategoryId" placeholder="CategoryId" asp-for="CategoryId">
+                    <option value="@Guid.Empty">Event Kategorisi</option>
+                    @foreach (var item in Model.CategoryList)
+                    {
+                        if (Model.Category.Id == item.Id)
+                        {
+                            <option value="@item.Id" selected>@item.CategoryName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.CategoryName</option>
+
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Etkinlik Adı</label>
+                <input type="text" class="form-control" id="EventName" asp-for="EventName" required>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Etkinlik Kısa Açıklama</label>
+                <input type="text" class="form-control" id="EventShortDescription" asp-for="EventShortDescription">
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>
+                        Etkinlik Açıklama
+                    </label>
+                    <div id="EventDescription" class="summernote" data-lang="en">@Html.Raw(Model.EventDescription)</div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>
+                        Etkinlik Kuralları
+                    </label>
+                    <div id="EventRules" class="summernote" data-lang="en">@Html.Raw(Model.EventRules)</div>
+                </div>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Etkinlik Başlangıç Tarihi</label>
+                <input type="text" class="form-control" id="EventStartDate" asp-for="EventStartDate">
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Etkinlik Bitiş Tarihi</label>
+                <input type="text" class="form-control" id="EventEndDate" asp-for="EventEndDate">
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Etkinlik Şehri</label>
+                <select class="js-states form-control" tabindex="-1" id="CityId" placeholder="CategoryId" asp-for="CityId">
+                    <option value="@Guid.Empty" selected>Şehir</option>
+                    @foreach (var item in Model.CityList)
+                    {
+                        if (Model.CityId == item.id)
+                        {
+                            <option value="@item.id" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.id">@item.Name</option>
+
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Etkinlik Adresi</label>
+                <input type="text" class="form-control" id="EventAdress" asp-for="EventAdress">
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Etkinlik Kotası</label>
+                <input type="number" class="form-control" id="Quota" asp-for="Quota">
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Latitude</label>
+                <input type="text" class="form-control" id="Latitude" asp-for="Latitude">
+            </div>
+            <div class="col-md-6 form-group mb-3">
+                <label for="exampleInputEmail1" class="form-label">Longitude</label>
+                <input type="text" class="form-control" id="Longitude" asp-for="Longitude">
+            </div>
+
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Resim Yükle</label>
+                <input class="form-control" type="file" id="formFile" multiple>
+            </div>
+            <div class="mb-3">
+                @foreach (var item in Model.EventImages)
+                {
+                    <div class="buttonimg" id="@(item.UploadedImageId)_area">
+                        <div class="news_img">
+                            <img src="@imageHelper.GetImageUrlById(item.UploadedImageId.Value)" />
+                        </div>
+                        <br>
+                        <a class="btn btn-primary" href="@imageHelper.GetImageUrlById(item.UploadedImageId.Value)" target="_blank">Görüntüle</a>
+                        <a class="btn btn-danger" onclick="Events.DeleteImage('@item.UploadedImageId.Value')">Sil</a>
+                    </div>
+                    <br>
+                }
+            </div>
+            <button type="button" class="btn btn-success" onclick="Events.AddEvents()">Kaydet</button>
+        </div>
+
+    </form>
+</div>
+<script src="~/js/pages/events.js"></script>
+@section Scripts{
+    <script src="~/plugins/summernote/summernote-lite.min.js"></script>
+    <script>
+        $('.summernote').summernote({
+            minHeight: 200,
+        });</script>
+
+}

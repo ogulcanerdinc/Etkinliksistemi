@@ -1,0 +1,17 @@
+﻿@using Eys.Domain.Models
+@model CityViewModel
+@{
+    ViewData["Title"] = "_GetCity";
+    Layout = null;
+}
+<div class="col-md-12">
+    <form id="frmCategory">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="id" id="Id" />
+        <div class="col-md-12 form-group mb-3">
+            <label for="exampleInputEmail1" class="form-label">Şehir Adı</label>
+            <input type="text" class="form-control" id="CityName" asp-for="Name" required>
+        </div>
+    </form>
+</div>
+
